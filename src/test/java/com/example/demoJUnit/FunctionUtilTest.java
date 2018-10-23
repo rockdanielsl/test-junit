@@ -20,7 +20,7 @@ public class FunctionUtilTest {
         String response = FunctionUtil.getJson(new Response(ResponseConstant.STATUS_CODE_FAILED, ResponseConstant.MESSAGE_FAILED, null));
 
         assertThat(response, is("{\"internalCode\":\""+ResponseConstant.STATUS_CODE_FAILED+"\",\"message\":\""+ResponseConstant.MESSAGE_FAILED+"\",\"payload\":null}"));
-        assertThat(response, containsString(ResponseConstant.STATUS_CODE_FORBIDDEN));
+        assertThat(response, containsString(ResponseConstant.STATUS_CODE_FAILED));
     }
 
 }
