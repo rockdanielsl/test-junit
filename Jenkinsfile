@@ -23,6 +23,7 @@ node {
    }
 
    stage("SonarQube Quality Gate") { 
+      withSonarQubeEnv('Sonar') { 
         timeout(time: 1, unit: 'HOURS') { 
            def qg = waitForQualityGate() 
            if (qg.status != 'OK') {
@@ -32,5 +33,6 @@ node {
                echo 'Sonar Quality Gate esta OK'
            }
         }
+      }
     }
 }
