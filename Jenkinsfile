@@ -18,12 +18,27 @@ node {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
       }
    }
+   
    stage('Build Sonar') {
          bat(/"${mvnHome}\bin\mvn" sonar:sonar -Dsonar.host.url=http:\/\/localhost:9000 -Dsonar.login=abb0d569c5439f5a3b04d86ea16550a9b5a5ef68/)
    }
 
+   stage('SonarQube analysis') { 
+        withSonarQubeEnv('Sonar') { 
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
+          '-f all/pom.xml ' +
+          '-Dsonar.projectKey=com.huettermann:all:master ' +
+          '-Dsonar.login=$SONAR_UN ' +
+          '-Dsonar.password=$SONAR_PW ' +
+          '-Dsonar.language=java ' +
+          '-Dsonar.sources=. ' +
+          '-Dsonar.tests=. ' +
+          '-Dsonar.test.inclusions=**/*Test*/** ' +
+          '-Dsonar.exclusions=**/*Test*/**'
+        }
+    }
+
    stage("SonarQube Quality Gate") { 
-      withSonarQubeEnv('Sonar') { 
         timeout(time: 1, unit: 'HOURS') { 
            def qg = waitForQualityGate() 
            if (qg.status != 'OK') {
@@ -33,6 +48,5 @@ node {
                echo 'Sonar Quality Gate esta OK'
            }
         }
-      }
     }
 }
