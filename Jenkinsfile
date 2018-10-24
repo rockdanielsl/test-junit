@@ -21,9 +21,9 @@ node {
    
    stage("build & SonarQube analysis") {
           node {
-              withSonarQubeEnv('Sonar') {
+              
                  bat 'mvn clean package sonar:sonar'
-              }    
+                  
           }
       }
       
