@@ -1,7 +1,7 @@
 node {
    def mvnHome
 
-   stage('Preparation') { // for display purposes
+   stage('Clone Project') { // for display purposes
       // Get some code from a GitHub repository
       git 'https://github.com/rockdanielsl/test-junit.git'
       // Get the Maven tool.
@@ -19,13 +19,13 @@ node {
       }
    }
    
-   stage("build & SonarQube analysis") {
+   stage("SonarQube Analysis") {
           withSonarQubeEnv('Sonar') {
              bat 'mvn clean package sonar:sonar'
           }    
       }
       
-      stage("Quality Gate"){
+      stage("SonarQube Quality Gate"){
           timeout(time: 1, unit: 'HOURS') {
               def qg = waitForQualityGate()
               if (qg.status != 'OK') {
