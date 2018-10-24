@@ -20,12 +20,9 @@ node {
    }
    
    stage("build & SonarQube analysis") {
-          node {
-              withSonarQubeEnv('Sonar') {
-
-                bat(/"${mvnHome}\bin\mvn" clean package sonar:sonar/)
-              }    
-          }
+          withSonarQubeEnv('Sonar') {
+             bat 'mvn clean package sonar:sonar'
+          }    
       }
       
       stage("Quality Gate"){
