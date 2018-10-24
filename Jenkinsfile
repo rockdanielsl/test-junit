@@ -25,7 +25,7 @@ node {
 
    stage('SonarQube analysis') { 
         withSonarQubeEnv('Sonar') { 
-          bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
+          bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:2.8.1:sonar ' + 
           '-Dsonar.projectKey=com.example:demoJUnit ' +
           '-Dsonar.login=rockdanielsl ' +
           '-Dsonar.password=c199600886d ' +
