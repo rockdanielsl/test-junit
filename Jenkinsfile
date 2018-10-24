@@ -27,8 +27,8 @@ node {
         withSonarQubeEnv('Sonar') { 
           bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
           '-Dsonar.projectKey=com.example:demoJUnit ' +
-          '-Dsonar.login=$SONAR_UN ' +
-          '-Dsonar.password=$SONAR_PW ' +
+          '-Dsonar.login=rockdanielsl ' +
+          '-Dsonar.password=c199600886d ' +
           '-Dsonar.language=java ' +
           '-Dsonar.sources=. ' +
           '-Dsonar.tests=. ' +
