@@ -23,20 +23,6 @@ node {
          bat(/"${mvnHome}\bin\mvn" sonar:sonar -Dsonar.host.url=http:\/\/localhost:9000 -Dsonar.login=abb0d569c5439f5a3b04d86ea16550a9b5a5ef68/)
    }
 
-   stage('SonarQube analysis') { 
-        withSonarQubeEnv('Sonar') { 
-          bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar ' + 
-          '-Dsonar.projectKey=com.example:demoJUnit ' +
-          '-Dsonar.login=rockdanielsl' +
-          '-Dsonar.password=c199600886d' +
-          '-Dsonar.language=java ' +
-          '-Dsonar.sources=. ' +
-          '-Dsonar.tests=. ' +
-          '-Dsonar.test.inclusions=**/*Test*/** ' +
-          '-Dsonar.exclusions=**/*Test*/**'
-        }
-    }
-
    stage("SonarQube Quality Gate") { 
         timeout(time: 1, unit: 'HOURS') { 
            def qg = waitForQualityGate() 
