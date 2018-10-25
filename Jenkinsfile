@@ -22,9 +22,7 @@ node {
     stage('Build Docker Image') {
       /* This builds the actual image; synonymous to
        * docker build on the command line */
-      withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
       app = docker.build("test-from-jenkins")
-    }
       
     }    
 }
