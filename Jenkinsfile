@@ -17,20 +17,12 @@ node {
       } else {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
       }
-   }
-   
-   stage("SonarQube Analysis") {
-          withSonarQubeEnv('Sonar') {
-             bat 'mvn clean package sonar:sonar'
-          }    
-      }
-      
-      stage("SonarQube Quality Gate"){
-          timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-          }
-      }       
+   }   
+
+    stage('Build Docker Image') {
+      /* This builds the actual image; synonymous to
+       * docker build on the command line */
+
+      app = docker.build("test-from-jenkins")
+    }    
 }
