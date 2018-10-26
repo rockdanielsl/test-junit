@@ -1,5 +1,3 @@
-Respaldo jenkins file funcionando
-
 node {
    def mvnHome
 
