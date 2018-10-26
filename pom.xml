@@ -5,7 +5,7 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>demoJUnit</artifactId>
-	<version>0.0.35-SNAPSHOT</version>
+	<version>0.0.45-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>demoJUnit</name>
@@ -22,15 +22,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<sonar.sources>src/main</sonar.sources>
-        <sonar.tests>src/test</sonar.tests>
-        <!-- Below property indicates the pattern of the test suite -->
-		<runSuite>**/*Suite.class</runSuite>
-		<!-- Sonar-JaCoCo properties -->
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.language>java</sonar.language>
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${user.dir}/target/jacoco.exec</sonar.jacoco.reportPath>
 	</properties>
 
 	<dependencies>
@@ -49,6 +43,13 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
+
+		<dependency>
+		  <groupId>com.google.code.findbugs</groupId>
+		  <artifactId>jsr305</artifactId>
+		  <version>3.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -58,35 +59,27 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- Below plugin ensures the execution of test cases during maven build-->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<includes>
-						<include>${runSuite}</include>
-					</includes>
-				</configuration>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>sonar-maven-plugin</artifactId>
+			    <version>3.0.2</version>
 			</plugin>
-
-			<!-- Sonar-JaCoCo integration plugin -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.6.201602180812</version>
-				<configuration>
-					<destFile>${sonar.jacoco.reportPath}</destFile>
-					<append>true</append>
-				</configuration>
-				<executions>
-					<execution>
-						<id>agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.2.201409121644</version>
+                <configuration>
+                    <destFile>${session.executionRootDirectory}/target/jacoco.exec</destFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
